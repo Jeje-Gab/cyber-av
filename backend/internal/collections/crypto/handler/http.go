@@ -3,6 +3,8 @@ package handler
 import (
 	"net/http"
 
+	"github.com/labstack/echo/v4" // << IMPORT NECESSÁRIO
+
 	collection "github.com/Jeje-Gab/cyber-av/backend/internal/collections/crypto"
 	"github.com/Jeje-Gab/cyber-av/backend/internal/dto"
 )
@@ -21,7 +23,7 @@ func (h *HTTP) Encrypt(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid payload"})
 	}
 	err, ctx, out := h.uc.Encrypt(c.Request().Context(), in)
-	_ = ctx // mantém a assinatura padrão (ctx encadeável)
+	_ = ctx // mantemos a assinatura (ctx encadeável)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": err.Error()})
 	}
